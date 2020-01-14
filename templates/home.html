@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+
+{% block content %}
+        <div class="row pageheader">
+            <div class="single_col">
+                <form action="/search">
+                    <input type="text" name="q" id="q" size="40" placeholder="" />
+                    <input type="submit" value="Vind!" />
+                </form>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="results double_col">
+                <h2>{% if q|length %}Zoekresultaten: {{ q }} {% else %}Fortezza people base{% endif %}</h2>
+                {% for result in response %}
+                <p class="ppl_result">
+                    <a href="/view/{{ result.name }}">{{ result.name }}</a>
+                    <a href="/update/{{ result.name }}" class="minor">
+                        <img src="/static/edit-24px.svg" height="18px" />
+                    </a>
+                </p>
+                {% endfor %}
+            </div>
+            <div class="buckets single_col">
+                {% for term in response.facets %}
+                <h6>{{ term }}</h6>
+                <ul>
+                    {% for item, count, selected in response.facets[term] %}
+                        <li><label><input value="{{ item }}" type="checkbox" class="skill" {% if item in q %}checked="checked"{% endif %}> {{ item }} ({{ count }})</label></li>
+                    {% endfor %}
+                </ul>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="absolution"><a href="/nieuw" title="Voeg jezelf toe">+</a></div>
+
+<script
+			  src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+			  integrity="sha256-pasqAKBDmFT4eHoN2ndd6lN370kFiGUFyTiUHWhU7k8="
+			  crossorigin="anonymous"></script>
+<script>
+$(document).ready(function() {
+    console.log(window.location.search)
+    $('.skill').click(function() {
+        that = this;
+        urlParams = new URLSearchParams(window.location.search);
+        q = urlParams.get('q');
+        console.log(q)
+        if (that.checked) {
+            if (q) {
+                q = q + ' ' + that.value;
+            } else {
+                q = that.value;
+            }
+        }
+        else {
+            q = q.replace(that.value, '');
+        }
+        urlParams.set('q', q);
+        window.location.search = urlParams;
+    });
+});
+</script>
+
+{% endblock %}
+

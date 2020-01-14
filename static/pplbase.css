@@ -1,0 +1,129 @@
+body {
+    background: #dfdfdf;
+    font-family: Calibri, Helvetica, sans-serif;
+}
+
+.row {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: 100%;
+}
+.formrow {
+    width: auto;
+}
+
+.cell {
+    display: table-cell;
+    padding: 4px 6px 4px 0;
+}
+
+.single_col {
+    display: flex;
+    flex-direction: column;
+    flex-basis: 100%;
+    flex: 1;
+}
+
+.double_col {
+    display: flex;
+    flex-direction: column;
+    flex-basis: 100%;
+    flex: 2;
+}
+
+.pageheader {
+    background: #000;
+    color: #fff;
+    padding: 20px 0;
+}
+.pageheader form {
+    margin: 0 20px;
+}
+
+.formwrap {
+    padding: 10px 20px;
+    background: azure;
+}
+.bigbutton {
+    padding: 5px 20px;
+    font-weight: bold;
+    margin: 10px;
+    text-align: center;
+    font-size: 24px;
+}
+
+.nowrap {
+    white-space: nowrap;
+    display: inline-block;
+}
+.nowrap::after{
+    content: ' ';
+    white-space: pre;
+}
+
+.ppl_result {
+    margin: 5px 20px;
+}
+.minor {
+    visibility: hidden;
+}
+.ppl_result:hover .minor {
+    visibility: visible;
+}
+
+.toplabel {
+    margin-top: 15px;
+    margin-bottom: 5px;
+    display: inline-block;
+    font-size: 18px;
+    font-weight: bolder;
+}
+
+.sidebar {
+    background: #fff;
+    padding: 10px;
+}
+.buckets ul {
+    margin: 0 0 10px 0;
+    padding: 0;
+    list-style-type: none;
+}
+.buckets h6 {
+    margin: 5px 0 0;
+    font-size: 16px;
+}
+
+.absolution {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    color: white;
+    background-color: green;
+    font-size: 72px;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    text-align: center;
+
+}
+.absolution a {
+    text-decoration: none;
+    color: white;
+    display: block;
+    line-height: 42px;
+}
+.absolution a:visited {
+    color: white;
+}
+
+.homelink_top {
+    width: 75%;
+    border-bottom: 1px solid #676767;
+}
+.homelink_bottom {
+    width: 75%;
+    border-top: 1px solid #676767;
+    margin-top: 20px;
+    padding-top: 5px;
+}

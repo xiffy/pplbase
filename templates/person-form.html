@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="row">
+        <div class="double_col formwrap">
+            <h2>Software professional -{{ mode }}-</h2>
+            <form method="POST">
+                <label class="toplabel">Naam:</label><br/>
+                <input type="text" placeholder="e.g. Jeffrey Lebowski" size="40" required="required" name="name" value="{{ values.name|default('') }}"/>
+                <br/>
+                {% for topic in answers %}
+                    <label class="toplabel">{{ questions[topic].get('q', 'Question not on file') }}</label><br />
+                    <div class="formrow">
+                    {% for option in answers[topic] %}
+                        <label class="nowrap cell"><input type="checkbox" name="{{topic}}" value="{{option}}"
+                        {% if topic in values and option in values[topic] %} checked="checked" {% endif %} />{{option}}</label>
+                    {% endfor %}
+                    </div>
+                    {% if questions[topic].get('extra', False) %}
+                        <label class="nowrap">Anders: <input type="text" size="40" name="{{topic}}_extra"></label>
+                        <br/>
+                    {% endif %}
+                {% endfor %}
+                <br/>
+                <label class="toplabel">Welke technologie wil je meer/beter gebruiken/verkennen (komma gescheiden, of 1 per regel)</label><br/>
+                <textarea rows="4" cols="80" name="wanna_learn"></textarea>
+                <br/>
+                <label class="toplabel">Welke technologie wil je echt niet meer gebruiken</label><br/>
+                <textarea rows="4" cols="80" name="pet_peeves"></textarea>
+                <br/>
+            {% if mode == 'new' %}
+                <input type="submit" value="Voeg toe" class="bigbutton"/>
+            {% else %}
+                <input type="submit" value="Sla op" class="bigbutton"/>
+            {% endif %}
+            </form>
+        </div>
+        <div class="single_col sidebar">
+            {% include 'person-sidebar.html' %}
+        </div>
+
+    </div>
+{% endblock %}
