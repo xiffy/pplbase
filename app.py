@@ -113,6 +113,8 @@ def person_save(doc_id=None):
             extra = request.form.get('%s_extra' % field, None)
             if extra:
                 answers[field].extend(extra.split(','))
+    # removes all empty lists from the answers
+    answers = {k: v for k, v in answers.items() if len(v) != 0}
     print(answers)
     if doc_id is None:
         newperson = Person(**answers)

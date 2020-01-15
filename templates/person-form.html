@@ -5,7 +5,7 @@
         <div class="double_col formwrap">
             <h2>Software professional -{{ mode }}-</h2>
             <form method="POST">
-                <label class="toplabel">Naam:</label><br/>
+                <label class="toplabel">Naam: <sup>*</sup></label><br/>
                 <input type="text" placeholder="e.g. Jeffrey Lebowski" size="40" required="required" name="name" value="{{ values.name|default('') }}"/>
                 <br/>
                 {% for topic in answers %}
