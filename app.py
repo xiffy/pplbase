@@ -51,7 +51,7 @@ def view_person(name):
     else:
         return str(response)
 
-@app.route('/nieuw', methods=["GET", "POST"])
+@app.route('/new', methods=["GET", "POST"])
 def add_person():
     if request.method == 'POST':
         person_save()

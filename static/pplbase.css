@@ -1,5 +1,5 @@
 body {
-    background: #dfdfdf;
+    background: #fff ;
     font-family: Calibri, Helvetica, sans-serif;
 }
 
@@ -33,17 +33,29 @@ body {
 }
 
 .pageheader {
-    background: #000;
+    background: linear-gradient(90deg, rgba(0,0,0,1) 0%, rgba(101,101,101,1) 30%, rgba(255,255,255,1) 83%);
     color: #fff;
-    padding: 20px 0;
 }
 .pageheader form {
-    margin: 0 20px;
+    margin: 20px 20px;
+}
+.pageheader .logo {
+    position: relative;
+    top: 0;
+    right: 10px;
+    width: 100px;
+    height: 50px;
+    display: inline-block;
+    background: url('/static/fortezza.png') no-repeat;
+    background-size: contain;
 }
 
 .formwrap {
-    padding: 10px 20px;
+    padding: 10px 10px 10px 20px;
     background: azure;
+    -webkit-box-shadow: 3px 3px 10px 0 rgba(69,69,69,1);
+	-moz-box-shadow: 3px 3px 10px 0 rgba(69,69,69,1);
+	box-shadow: 3px 3px 10px 0 rgba(69,69,69,1);
 }
 .bigbutton {
     padding: 5px 20px;
@@ -81,8 +93,9 @@ body {
 }
 
 .sidebar {
-    background: #fff;
+    background: transparent;
     padding: 10px;
+    margin-right: 10px;
 }
 .buckets ul {
     margin: 0 0 10px 0;
