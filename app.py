@@ -1,55 +1,9 @@
 from flask import Flask, render_template, request, escape, abort, redirect, url_for
-from elasticsearch_dsl import FacetedSearch, TermsFacet, connections, UpdateByQuery, \
-    Document, Text, Keyword, normalizer, Search
-
-
-connections.create_connection()
+from elasticsearch_dsl import Search
+from person import Person
+from person_finder import PersonFinder
 
 app = Flask(__name__)
-
-lowercase = normalizer('lowercaser',
-    filter=['lowercase']
-)
-
-class Person(Document):
-    name = Text(analyzer='snowball', copy_to='_all')
-    languages = Keyword(normalizer=lowercase, copy_to='_all')
-    web = Keyword(normalizer=lowercase, copy_to='_all')
-    frameworks = Keyword(normalizer=lowercase, copy_to='_all')
-    databases = Keyword(normalizer=lowercase, copy_to='_all')
-    platforms = Keyword(normalizer=lowercase, copy_to='_all')
-    buildtools = Keyword(normalizer=lowercase, copy_to='_all')
-    editor = Keyword(normalizer=lowercase, copy_to='_all')
-    os = Keyword(normalizer=lowercase, copy_to='_all')
-    containers = Keyword(normalizer=lowercase, copy_to='_all')
-    wanna_learns = Keyword(normalizer=lowercase, copy_to='_all')
-    pet_peeves = Keyword(normalizer=lowercase, copy_to='_all')
-    _all = Text(analyzer='snowball')
-    class Index:
-        name = 'softwareprofs'
-
-# dit moet eenmalig om de index correct aan te maken:
-Person.init()
-
-class PersonFinder(FacetedSearch):
-    index = 'softwareprofs'
-    fields = ['_all']
-    facets = {
-        'languages': TermsFacet(field='languages'),
-        'web': TermsFacet(field='web'),
-        'frameworks': TermsFacet(field='frameworks'),
-        'databases': TermsFacet(field='databases'),
-        'platforms': TermsFacet(field='platforms'),
-        'buildtools': TermsFacet(field='buildtools'),
-        'editor': TermsFacet(field='editor'),
-        'os': TermsFacet(field='os'),
-        'containers': TermsFacet(field='containers')
-    }
-    def search(self):
-        s = super().search()
-        if not self._query:
-            return s.query('match_all')
-        return s.query('multi_match', query=self._query, operator="and", fields="_all")
 
 @app.route('/')
 @app.route('/search')
