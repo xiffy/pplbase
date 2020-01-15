@@ -38,24 +38,25 @@
 <script
 			  src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
 			  integrity="sha256-pasqAKBDmFT4eHoN2ndd6lN370kFiGUFyTiUHWhU7k8="
-			  crossorigin="anonymous"></script>
+			  crossorigin="anonymous">
+</script>
 <script>
 $(document).ready(function() {
-    console.log(window.location.search)
     $('.skill').click(function() {
         that = this;
         urlParams = new URLSearchParams(window.location.search);
         q = urlParams.get('q');
-        console.log(q)
         if (that.checked) {
-            if (q) {
-                q = q + ' ' + that.value;
-            } else {
-                q = that.value;
-            }
+            if (q) { q = q + ' ' + that.value; }
+            else   { q = that.value; }
         }
         else {
-            q = q.replace(that.value, '');
+            ar = q.split(' ');
+            ar.forEach(function(item, index, object) {
+                if (item == that.value) {
+                    object.splice(index,1)}
+            });
+            q = ar.join(' ');
         }
         urlParams.set('q', q);
         window.location.search = urlParams;
