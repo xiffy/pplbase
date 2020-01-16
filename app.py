@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, escape, abort, redirect, url_for
+from flask import Flask, render_template, request, escape, abort, redirect, url_for, send_from_directory
 from elasticsearch_dsl import Search
 from person import Person
 from person_finder import PersonFinder
@@ -77,6 +77,10 @@ def person_save(doc_id=None):
         person = Person.get(doc_id)
         person.update(**answers)
 
+@app.route('/favicon.ico')
+def favicon():
+    return send_from_directory(os.path.join(app.root_path, 'static'),
+                               'favicon.ico', mimetype='image/vnd.microsoft.icon')
 
 if __name__ == '__main__':
     Person.init()
