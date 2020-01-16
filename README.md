@@ -30,16 +30,14 @@ flask run
 Je hebt nu een elasticsearch instantie op de standaard poort 9200 draaien (bereikbaar vanaf localhost en nergens anders), en een webserver luisterend op poort 5000. http://localhost:5000/ levert een maagdelijke PeopleBase. 
 
 #### Docker
-Of je gebruikt docker en docker-compose in de project root staat een Dockerfile en een docker-compose.yml. De dockerfile gebruikt Docker om de flask-python applicatie te kunnen draaien. Voor elasticsearch gebruik ik een default image (zonder te builden)
+Of je gebruikt docker en docker-compose. In de project root staat een _Dockerfile_ en een _docker-compose.yml_. De dockerfile gebruikt Docker om de flask-python applicatie te kunnen bouwen en draaien. Voor elasticsearch gebruik ik een default image (zonder te builden)
 
 ```
 git clone git@github.com:xiffy/pplbase.git 
 docker-compose build
 docker-compose run
 ```
-c'est tout. Ook nu kan je op http://localhost:5000/ de applicatie draaien.
-
-
+c'est tout. Ook nu kan je op http://localhost:5000/ de applicatie draaien (Your Milage May Vary). 
 
 
     
