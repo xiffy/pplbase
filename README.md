@@ -44,6 +44,7 @@ c'est tout. Ook nu kan je op http://localhost:5000/ de applicatie draaien (Your 
 TODO:
  - [ ] Testen schrijven
  - [x] Dockerize elastic
+ - [ ] Persisteer Elasticsearch data
  - [x] Dockerize pplbase
  - [ ] setup.py
 
