@@ -12,6 +12,4 @@ COPY *.py /app/
 COPY static/* /app/static/
 COPY templates/* /app/templates/
 
-#RUN git clone git@github.com:xiffy/pplbase.git
-
-CMD ls -latr
+CMD ["flask", "run", "--host=0.0.0.0"]

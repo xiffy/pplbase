@@ -1,7 +1,8 @@
+import os
 from flask import Flask, render_template, request, escape, abort, redirect, url_for, send_from_directory
-from elasticsearch_dsl import Search
-from person import Person
-from person_finder import PersonFinder
+from elasticsearch_dsl import Search, connections
+from .person import Person
+from .person_finder import PersonFinder
 
 app = Flask(__name__)
 
@@ -81,6 +82,7 @@ def person_save(doc_id=None):
 def favicon():
     return send_from_directory(os.path.join(app.root_path, 'static'),
                                'favicon.ico', mimetype='image/vnd.microsoft.icon')
+
 
 if __name__ == '__main__':
     Person.init()

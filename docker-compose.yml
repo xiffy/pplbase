@@ -1,0 +1,32 @@
+version: '3'
+services:
+  api:
+    build: .
+    links:
+      - elastic
+    ports:
+      - "5000:5000"
+    networks:
+      - pplbase
+    environment:
+      - ELASTIC_HOSTS=elastic localhost
+      - FLASK_APP=app.py
+      - FLASK_ENV=development
+      - FLASK_DEBUG=0
+    tty: true
+
+
+  elastic:
+    image: "elasticsearch:7.5.1"
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    networks:
+      - pplbase
+    environment:
+      - discovery.type=single-node
+
+networks:
+  pplbase:
+    driver: bridge
+

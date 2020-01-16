@@ -1,7 +1,5 @@
-from elasticsearch_dsl import connections, Document, Text, Keyword, normalizer, Index
+from elasticsearch_dsl import Document, Text, Keyword, normalizer, Index
 
-
-connections.create_connection()
 
 lowercase = normalizer('lowercaser',
     filter=['lowercase']
