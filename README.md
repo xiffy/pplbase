@@ -35,7 +35,7 @@ Of je gebruikt docker en docker-compose. In de project root staat een _Dockerfil
 ```
 git clone git@github.com:xiffy/pplbase.git 
 docker-compose build
-docker-compose run
+docker-compose up
 ```
 c'est tout. Ook nu kan je op http://localhost:5000/ de applicatie draaien (Your Milage May Vary). 
 
