@@ -5,26 +5,30 @@ from .person_finder import PersonFinder
 
 
 def home():
+    """Return the homepage or perform a search """
     if request.args.get('q', None):
         q = escape(request.args['q'])
     else:
         q = ''
+    qlist = q.split(' ')
     resultset = PersonFinder(q)
     response = resultset.execute()
-    return render_template('home.html', response=response, q=q)
+    return render_template('home.html', response=response, q=q, qlist=qlist)
 
 
 def delete_person(name):
+    """"Remove one person by name from the database"""
     response = Person.getter(name)
     if response.success() and response.hits.total.value == 1:
         Person.delete(name)
     else:
         # fail hard
         abort(404)
-    return 'He is a gonner! <a href="/">OK</a>'
+    return '<h1>%s?</h1> He is a gonner! <a href="/">OK</a>' % name
 
 
 def update_person(name):
+    """Update one person with new values"""
     response = Person.getter(name)
     if response.success() and response.hits.total.value == 1:
         original = response.hits[0].to_dict()
