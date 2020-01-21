@@ -1,9 +1,7 @@
 import os
 from flask import Flask, render_template, request, escape, abort, redirect, url_for, send_from_directory
-from elasticsearch_dsl import Search, MultiSearch, connections
 from .person import Person
 from .person_finder import PersonFinder
-
 
 
 def home():
@@ -19,12 +17,12 @@ def home():
 def delete_person(name):
     response = Person.getter(name)
     if response.success() and response.hits.total.value == 1:
-        pers.delete()
+        Person.delete(name)
     else:
         # fail hard
-        print(response.hits.total.value)
         abort(404)
     return 'He is a gonner! <a href="/">OK</a>'
+
 
 def update_person(name):
     response = Person.getter(name)
@@ -37,6 +35,7 @@ def update_person(name):
     else:
         abort(404)
 
+
 def view_person(name):
     response = Person.getter(name)
     if response.success() and response.hits.total.value == 1:
@@ -44,6 +43,7 @@ def view_person(name):
         return render_template('person.html', values=original, answers=ANSWERS, questions=QUESTIONS)
     else:
         return 'name %s not on file' % name
+
 
 def add_person():
     if request.method == 'POST':
@@ -54,7 +54,6 @@ def add_person():
 
 def person_save(doc_id=None):
     answers = {'name': escape(request.form.get('name', None))}
-    print(request.form.__repr__)
     for field in QUESTIONS:
         answers[field] = request.form.getlist(field)
         if QUESTIONS[field].get('extra', False):
@@ -63,13 +62,13 @@ def person_save(doc_id=None):
                 answers[field].extend(extra.split(','))
     # removes all empty lists from the answers
     answers = {k: v for k, v in answers.items() if len(v) != 0}
-    print(answers)
     if doc_id is None:
         newperson = Person(**answers)
         newperson.save(refresh=True)
     else:
         person = Person.get(doc_id)
-        person.update(**answers)
+        person.update(refresh=True, **answers)
+
 
 def favicon():
     return send_from_directory(os.path.join(app.root_path, 'static'),
@@ -87,8 +86,8 @@ def create_pplbase():
     app.add_url_rule('/search', view_func=home)
     return app
 
-app = create_pplbase()
 
+app = create_pplbase()
 
 QUESTIONS = {
     'languages': {'q': 'Welke talen gebruik je veelal (programmeren, scripten, markup)?',
@@ -105,7 +104,7 @@ QUESTIONS = {
                    'title': 'Gebruikt ook'},
     'platforms': {'q': 'Wat voor platform(s) ontwikkel je veelal tegen?',
                   'extra': True,
-                  'title':'Ontwikkelt voor:'},
+                  'title': 'Ontwikkelt voor:'},
     'buildtools': {'q': 'Wat voor build tools gebruik je veelal?',
                    'extra': True,
                    'title': 'Build met:'},
@@ -135,7 +134,7 @@ ANSWERS = {
                   'Microsoft Azure', 'IBM Cloud', 'GoCD', 'Heroku'],
     'buildtools': ['Maven', 'Gradle', 'Grunt', 'Ant', 'NPM', 'make', 'Niet van toepassing'],
     'editor': ['IntelliJ', 'Visual Studio Code', 'Visual Studio', 'PyCharm', 'Notepad++', 'Sublime', 'Qt Creator',
-                'Vim', 'Eclipse', 'NetBeans', 'XCode', 'Android Studio', 'UltraEdit', 'emacs'],
+               'Vim', 'Eclipse', 'NetBeans', 'XCode', 'Android Studio', 'UltraEdit', 'emacs'],
     'os': ['Windows', 'MacOS', 'Linux', 'BSD', 'FreeBSD', 'Chrome', 'iOS', 'Android'],
     'containers': ['Enkel voor hobby', 'Voor ontwikkeling', 'Op de testomgeving', 'Op productie', 'Nooit'],
 }

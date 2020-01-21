@@ -28,6 +28,14 @@ class Person(Document):
         pers = Search(index='softwareprofs').query("simple_query_string", query=' +'.join(q), fields=["name"])
         return pers.execute()
 
+    @classmethod
+    def delete(cls, name):
+        q = [w for w in name.split(' ')]
+        pers = Search(index='softwareprofs').query("simple_query_string", query=' +'.join(q), fields=["name"])
+        pers.delete()
+        return True
+
+
 
 if not Index('softwareprofs').exists():
     # dit moet eenmalig om de index correct aan te maken:
