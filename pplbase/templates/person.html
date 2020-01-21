@@ -3,7 +3,7 @@
 {% block content %}
     <div class="row">
         <div class="double_col formwrap">
-            <a href="/" class="homelink_top" title="Country road, take me ..."><img src="/pplbase/static/home-24px.svg" alt="home icon" width="30px"/></a>
+            <a href="/" class="homelink_top" title="Country road, take me ..."><img src="/static/home-24px.svg" alt="home icon" width="30px"/></a>
             <h2>{{ values.name }}</h2>
             {% for topic in answers %}
                 <label class="toplabel">{{ questions[topic].get('title', 'Question-title not on file') }}</label><br />
@@ -11,7 +11,7 @@
                     {{ item }}{{ "," if not loop.last }}
                 {% endfor %}
             {% endfor %}
-            <a href="/" class="homelink_bottom" title="Country road, take me ..."><img src="/pplbase/static/home-24px.svg" alt="home icon" width="30px"/></a>
+            <a href="/" class="homelink_bottom" title="Country road, take me ..."><img src="/static/home-24px.svg" alt="home icon" width="30px"/></a>
         </div>
         <div class="single_col sidebar">
             {% include 'person-sidebar.html' %}

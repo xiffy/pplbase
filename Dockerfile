@@ -4,11 +4,11 @@ EXPOSE 5000
 
 WORKDIR /app
 
-COPY pplbase/requirements.txt /app
+COPY pplbase/requirements.txt /app/
 
 RUN pip3 install -r requirements.txt
 
-COPY *.py /app/
+COPY pplbase/*.py /app/
 COPY pplbase/static /app/static/
 COPY pplbase/templates /app/templates/
 
