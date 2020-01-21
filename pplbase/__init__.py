@@ -6,13 +6,14 @@ from elasticsearch_dsl import connections, Index
 # see Dockerfile and docker-compose.yml for further explanation
 
 hosts = os.environ.get('ELASTIC_HOSTS', 'localhost').split(" ")
-
 connections.create_connection(hosts=hosts)
 endtime = time.time() + 30
 
 while time.time() < endtime:
     try:
         Index('softwareprofs').exists()
+        break
     except:
         print('.', end='')
         time.sleep(2)
+

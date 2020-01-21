@@ -1,4 +1,4 @@
-from elasticsearch_dsl import FacetedSearch, TermsFacet, connections
+from elasticsearch_dsl import FacetedSearch, TermsFacet, connections, Search
 
 class PersonFinder(FacetedSearch):
     index = 'softwareprofs'
@@ -18,4 +18,5 @@ class PersonFinder(FacetedSearch):
         s = super().search()
         if not self._query:
             return s.query('match_all')
-        return s.query('multi_match', query=self._query, operator="and", fields="_all")
+        return s.query('multi_match', query=self._query, operator="AND", fields="_all")
+

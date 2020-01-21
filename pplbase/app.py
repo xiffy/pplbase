@@ -1,6 +1,6 @@
 import os
 from flask import Flask, render_template, request, escape, abort, redirect, url_for, send_from_directory
-from elasticsearch_dsl import Search, connections
+from elasticsearch_dsl import Search, MultiSearch, connections
 from .person import Person
 from .person_finder import PersonFinder
 
@@ -17,18 +17,17 @@ def home():
 
 
 def delete_person(name):
-    pers = Search(index='softwareprofs').query("match", name=name)
-    response = pers.execute()
+    response = Person.getter(name)
     if response.success() and response.hits.total.value == 1:
         pers.delete()
     else:
         # fail hard
+        print(response.hits.total.value)
         abort(404)
     return 'He is a gonner! <a href="/">OK</a>'
 
 def update_person(name):
-    pers = Search(index='softwareprofs').query("match", name=name)
-    response = pers.execute()
+    response = Person.getter(name)
     if response.success() and response.hits.total.value == 1:
         original = response.hits[0].to_dict()
         if request.method == 'POST':
@@ -39,13 +38,12 @@ def update_person(name):
         abort(404)
 
 def view_person(name):
-    pers = Search(index='softwareprofs').query("match", name=name)
-    response = pers.execute()
+    response = Person.getter(name)
     if response.success() and response.hits.total.value == 1:
         original = response.hits[0].to_dict()
         return render_template('person.html', values=original, answers=ANSWERS, questions=QUESTIONS)
     else:
-        return str(response)
+        return 'name %s not on file' % name
 
 def add_person():
     if request.method == 'POST':
@@ -56,6 +54,7 @@ def add_person():
 
 def person_save(doc_id=None):
     answers = {'name': escape(request.form.get('name', None))}
+    print(request.form.__repr__)
     for field in QUESTIONS:
         answers[field] = request.form.getlist(field)
         if QUESTIONS[field].get('extra', False):

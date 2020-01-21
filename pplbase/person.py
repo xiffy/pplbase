@@ -1,4 +1,4 @@
-from elasticsearch_dsl import Document, Text, Keyword, normalizer, Index
+from elasticsearch_dsl import Document, Text, Keyword, normalizer, Index, Search
 
 
 lowercase = normalizer('lowercaser',
@@ -22,7 +22,14 @@ class Person(Document):
     class Index:
         name = 'softwareprofs'
 
+    @classmethod
+    def getter(cls, name):
+        q = [w for w in name.split(' ')]
+        pers = Search(index='softwareprofs').query("simple_query_string", query=' +'.join(q), fields=["name"])
+        return pers.execute()
+
 
 if not Index('softwareprofs').exists():
     # dit moet eenmalig om de index correct aan te maken:
     Person.init()
+
