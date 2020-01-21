@@ -5,7 +5,6 @@ lowercase = normalizer('lowercaser',
     filter=['lowercase']
 )
 
-
 class Person(Document):
     name = Text(analyzer='snowball', copy_to='_all')
     languages = Keyword(normalizer=lowercase, copy_to='_all')

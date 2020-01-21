@@ -4,12 +4,12 @@ EXPOSE 5000
 
 WORKDIR /app
 
-COPY requirements.txt /app
+COPY pplbase/requirements.txt /app
 
 RUN pip3 install -r requirements.txt
 
 COPY *.py /app/
-COPY static/* /app/static/
-COPY templates/* /app/templates/
+COPY pplbase/static /app/static/
+COPY pplbase/templates /app/templates/
 
 CMD ["flask", "run", "--host=0.0.0.0"]

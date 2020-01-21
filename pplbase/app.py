@@ -4,11 +4,9 @@ from elasticsearch_dsl import Search, connections
 from .person import Person
 from .person_finder import PersonFinder
 
-app = Flask(__name__)
 
-@app.route('/')
-@app.route('/search')
-def hello_world():
+
+def home():
     if request.args.get('q', None):
         q = escape(request.args['q'])
     else:
@@ -18,7 +16,6 @@ def hello_world():
     return render_template('home.html', response=response, q=q)
 
 
-@app.route('/delete/<name>')
 def delete_person(name):
     pers = Search(index='softwareprofs').query("match", name=name)
     response = pers.execute()
@@ -29,7 +26,6 @@ def delete_person(name):
         abort(404)
     return 'He is a gonner! <a href="/">OK</a>'
 
-@app.route('/update/<name>', methods=['GET', 'POST'])
 def update_person(name):
     pers = Search(index='softwareprofs').query("match", name=name)
     response = pers.execute()
@@ -42,7 +38,6 @@ def update_person(name):
     else:
         abort(404)
 
-@app.route('/view/<name>')
 def view_person(name):
     pers = Search(index='softwareprofs').query("match", name=name)
     response = pers.execute()
@@ -52,7 +47,6 @@ def view_person(name):
     else:
         return str(response)
 
-@app.route('/new', methods=["GET", "POST"])
 def add_person():
     if request.method == 'POST':
         person_save()
@@ -78,15 +72,23 @@ def person_save(doc_id=None):
         person = Person.get(doc_id)
         person.update(**answers)
 
-@app.route('/favicon.ico')
 def favicon():
     return send_from_directory(os.path.join(app.root_path, 'static'),
                                'favicon.ico', mimetype='image/vnd.microsoft.icon')
 
 
-if __name__ == '__main__':
-    Person.init()
-    app.run()
+def create_pplbase():
+    app = Flask('pplbase')
+    app.add_url_rule('/favicon.ico', view_func=favicon)
+    app.add_url_rule('/new', methods=["GET", "POST"], view_func=add_person)
+    app.add_url_rule('/view/<name>', view_func=view_person)
+    app.add_url_rule('/update/<name>', methods=['GET', 'POST'], view_func=update_person)
+    app.add_url_rule('/delete/<name>', methods=['GET', 'POST'], view_func=delete_person)
+    app.add_url_rule('/', view_func=home)
+    app.add_url_rule('/search', view_func=home)
+    return app
+
+app = create_pplbase()
 
 
 QUESTIONS = {
@@ -135,6 +137,6 @@ ANSWERS = {
     'buildtools': ['Maven', 'Gradle', 'Grunt', 'Ant', 'NPM', 'make', 'Niet van toepassing'],
     'editor': ['IntelliJ', 'Visual Studio Code', 'Visual Studio', 'PyCharm', 'Notepad++', 'Sublime', 'Qt Creator',
                 'Vim', 'Eclipse', 'NetBeans', 'XCode', 'Android Studio', 'UltraEdit', 'emacs'],
-    'os': ['Windows', 'MacOS', 'Linux', 'Chrome', 'iOS', 'Android'],
+    'os': ['Windows', 'MacOS', 'Linux', 'BSD', 'FreeBSD', 'Chrome', 'iOS', 'Android'],
     'containers': ['Enkel voor hobby', 'Voor ontwikkeling', 'Op de testomgeving', 'Op productie', 'Nooit'],
 }
