@@ -30,3 +30,7 @@ networks:
   pplbase:
     driver: bridge
 
+# WSL en docker aantekeningen, codepage errors los je op door:
+# - git-bash te gebruiken (mingw)
+# in de terminal waar het mis gaat (Dos/Powershell) "chcp 932" te gebruiken
+
