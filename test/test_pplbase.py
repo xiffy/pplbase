@@ -65,8 +65,8 @@ class TestRoutes(unittest.TestCase):
         assert 'PHP' not in str(response.data)
         assert 'Hadoop' in str(response.data)
 
-        #response = self.app.get('/delete/Test de Kees')
-        #assert 'gonner' in str(response.data)
+        response = self.app.get('/delete/Test de Kees')
+        assert 'gonner' in str(response.data)
 
 
     def test_get_view_person(self):
