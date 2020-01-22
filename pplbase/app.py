@@ -19,7 +19,7 @@ def home():
 def delete_person(name):
     """"Remove one person by name from the database"""
     response = Person.getter(name)
-    if response.success() and response.hits.total.value == 1:
+    if response.success() and response.hits.total.value >= 1:
         Person.delete(name)
     else:
         # fail hard

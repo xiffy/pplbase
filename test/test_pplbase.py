@@ -1,8 +1,9 @@
 import unittest
-import pplbase.person
 from pplbase.app import create_pplbase
 
 class TestRoutes(unittest.TestCase):
+
+
     def setUp(self):
         app = create_pplbase()
         app.config['TESTING'] = True
