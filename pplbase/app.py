@@ -6,13 +6,14 @@ from .person_finder import PersonFinder
 
 def home():
     """Return the homepage or perform a search """
-    if request.args.get('q', None):
-        q = escape(request.args['q'])
-    else:
-        q = ''
-    qlist = q.split(' ')
+    q = escape(request.args['q']) if request.args.get('q', None) else ''
     resultset = PersonFinder(q)
     response = resultset.execute()
+    qlist = []
+    for term in response.facets:
+        for item, _, _ in response.facets[term]:
+            if item.lower() in q.lower():
+                qlist.append(item)
     return render_template('home.html', response=response, q=q, qlist=qlist)
 
 

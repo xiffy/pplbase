@@ -28,7 +28,7 @@
                 <h6>{{ term }}</h6>
                 <ul>
                     {% for item, count, selected in response.facets[term] %}
-                        <li><label><input value="{{ item }}" type="checkbox" class="skill" {% if item in qlist %}checked="checked"{% endif %}> {{ item }} ({{ count }})</label></li>
+                        <li><label><input value="{{ item }}" type="checkbox" class="skill" {% if item|lower in qlist %}checked="checked"{% endif %}> {{ item }} ({{ count }})</label></li>
                     {% endfor %}
                 </ul>
                 {% endfor %}
