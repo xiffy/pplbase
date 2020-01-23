@@ -1,9 +1,9 @@
 from elasticsearch_dsl import Document, Text, Keyword, normalizer, Index, Search
 
-
 lowercase = normalizer('lowercaser',
-    filter=['lowercase']
-)
+                       filter=['lowercase']
+                       )
+
 
 class Person(Document):
     name = Text(analyzer='snowball', copy_to='_all')
@@ -19,6 +19,7 @@ class Person(Document):
     wanna_learns = Keyword(normalizer=lowercase, copy_to='_all')
     pet_peeves = Keyword(normalizer=lowercase, copy_to='_all')
     _all = Text(analyzer='snowball')
+
     class Index:
         name = 'softwareprofs'
 
@@ -36,8 +37,6 @@ class Person(Document):
         return True
 
 
-
 if not Index('softwareprofs').exists():
     # dit moet eenmalig om de index correct aan te maken:
     Person.init()
-

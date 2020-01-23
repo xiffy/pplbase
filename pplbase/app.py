@@ -14,7 +14,7 @@ def home():
         for item, _, _ in response.facets[term]:
             if item.lower() in q.lower():
                 qlist.append(item)
-    return render_template('home.html', response=response, q=q, qlist=qlist)
+    return render_template('home.html', response=response, q=q, qlist=list(set(qlist)))
 
 
 def delete_person(name):

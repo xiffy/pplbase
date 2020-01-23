@@ -1,8 +1,21 @@
 import unittest
 from pplbase.app import create_pplbase
+from pplbase.person import Person
+from pplbase.person_finder import PersonFinder
+
+
+class TestPerson(unittest.TestCase):
+    def test_personfinder(self):
+        result = PersonFinder('Steve Jobs').execute()
+        self.assertEqual(len(result), 1)
+        self.assertGreater(len(result.facets.to_dict()), 0)
+        self.assertIn('Java', result[0].languages)
+
+    def test_person_getter(self):
+        result = Person.getter('Steve Jobs')
+        self.assertEqual(len(result), 1)
 
 class TestRoutes(unittest.TestCase):
-
 
     def setUp(self):
         app = create_pplbase()
@@ -68,18 +81,15 @@ class TestRoutes(unittest.TestCase):
         response = self.app.get('/delete/Test de Kees')
         assert 'gonner' in str(response.data)
 
-
     def test_get_view_person(self):
         response = self.app.get('/', query_string="q=*")
         self.assertEqual(response.status_code, 200)
         assert 'Vind!' in str(response.data)
 
-
-
-
-
-
-
+    def test_favicon(self):
+        response = self.app.get('/favicon.ico')
+        self.assertEqual(response.headers.get('Content-type', None), 'image/vnd.microsoft.icon')
+        response.close()
 
 
 if __name__ == "__main__":

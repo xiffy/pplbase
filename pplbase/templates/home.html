@@ -54,7 +54,7 @@ $(document).ready(function() {
             else   { q = that.value; }
         }
         else {
-            ar = q.split(' ');
+            ar = {{ qlist|safe }}
             ar.forEach(function(item, index, object) {
                 if (item == that.value) {
                     object.splice(index,1)}
