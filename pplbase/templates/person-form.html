@@ -23,10 +23,10 @@
                 {% endfor %}
                 <br/>
                 <label class="toplabel">Welke technologie wil je meer/beter gebruiken/verkennen (komma gescheiden, of 1 per regel)</label><br/>
-                <textarea rows="4" cols="80" name="wanna_learn"></textarea>
+                <textarea rows="4" cols="80" name="wanna_learns">{{ values.wanna_learns|join(', ') }}</textarea>
                 <br/>
                 <label class="toplabel">Welke technologie wil je echt niet meer gebruiken</label><br/>
-                <textarea rows="4" cols="80" name="pet_peeves"></textarea>
+                <textarea rows="4" cols="80" name="pet_peeves">{{ values.pet_peeves|join(', ') }}</textarea>
                 <br/>
             {% if mode == 'new' %}
                 <input type="submit" value="Voeg toe" class="bigbutton"/>

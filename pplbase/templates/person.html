@@ -7,10 +7,16 @@
             <h2>{{ values.name }}</h2>
             {% for topic in answers %}
                 <label class="toplabel">{{ questions[topic].get('title', 'Question-title not on file') }}</label><br />
-                {% for item in values[topic] %}
-                    {{ item }}{{ "," if not loop.last }}
-                {% endfor %}
+                {{ values[topic]|join(', ') }}
             {% endfor %}
+            {% if values.wanna_learns %}
+                <label class="toplabel">Wil meer weten van</label>
+                {{ values.wanna_learns|join(', ')  }}
+            {% endif %}
+            {% if values.wanna_learns %}
+                <label class="toplabel">Nooit meer</label>
+                {{ values.pet_peeves|join(', ')  }}
+            {% endif %}
             <a href="/" class="homelink_bottom" title="Country road, take me ..."><img src="/static/home-24px.svg" alt="home icon" width="30px"/></a>
         </div>
         <div class="single_col sidebar">

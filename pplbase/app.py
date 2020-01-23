@@ -65,6 +65,13 @@ def person_save(doc_id=None):
             extra = request.form.get('%s_extra' % field, None)
             if extra:
                 answers[field].extend(extra.split(','))
+    if request.form.get('wanna_learns', None):
+        wanna_learns = request.form.get('wanna_learns').replace(',', '\n').splitlines()
+        answers['wanna_learns'] = [w.strip() for w in wanna_learns]
+    if request.form.get('pet_peeves', None):
+        pet_peeves = request.form.get('pet_peeves').replace(',', '\n').splitlines()
+        answers['pet_peeves'] = [w.strip() for w in pet_peeves]
+
     # removes all empty lists from the answers
     answers = {k: v for k, v in answers.items() if len(v) != 0}
     if doc_id is None:
