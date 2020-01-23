@@ -38,8 +38,6 @@ class TestRoutes(unittest.TestCase):
         - Update person,
         - View person,
         - Delete person
-        Dit moet opgesplitst worden in atomaire acties zodra er een dedicated (schone)
-        elasticsearch wordt opgestart voor het testen.
         """
         response = self.app.post('/new', data={
             'name': 'Test de Kees',
