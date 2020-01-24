@@ -1,2 +1,4 @@
 /venv/
 /test/data/old_*.json
+/.idea/
+/pplbase/__pycache__/

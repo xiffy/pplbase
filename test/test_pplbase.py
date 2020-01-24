@@ -50,12 +50,15 @@ class TestRoutes(unittest.TestCase):
             'editor': ['PyCharm'],
             'os': ['Windows', 'Linux'],
             'containers': ['nooit'],
+            'pet_peeves': ['SCO Unix, Novell'],
+            'wanna_learns': ['Docker', 'Kubernetes'],
         })
         self.assertEqual(response.status_code, 302)
         assert '/view/Test%20de%20Kees' in str(response.data)
 
         response = self.app.get('/update/Test de Kees')
         assert 'Oracle' in str(response.data)
+        assert 'SCO Unix' in str(response.data)
 
         response = self.app.post('/update/Test de Kees', data={
             'name': 'Test de Kees',

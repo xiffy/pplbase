@@ -13,7 +13,7 @@ def home():
     for term in response.facets:
         for item, _, _ in response.facets[term]:
             if item.lower() in q.lower():
-                qlist.append(item)
+                qlist.append(item.lower())
     return render_template('home.html', response=response, q=q, qlist=list(set(qlist)))
 
 
