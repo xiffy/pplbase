@@ -8,6 +8,11 @@
         },
         "buildtools": {
           "type": "keyword",
+          "fields": {
+            "raw": {
+              "type": "keyword"
+            }
+          },
           "copy_to": [
             "_all"
           ],
@@ -15,6 +20,11 @@
         },
         "containers": {
           "type": "keyword",
+          "fields": {
+            "raw": {
+              "type": "keyword"
+            }
+          },
           "copy_to": [
             "_all"
           ],
@@ -22,6 +32,11 @@
         },
         "databases": {
           "type": "keyword",
+          "fields": {
+            "raw": {
+              "type": "keyword"
+            }
+          },
           "copy_to": [
             "_all"
           ],
@@ -29,6 +44,11 @@
         },
         "editor": {
           "type": "keyword",
+          "fields": {
+            "raw": {
+              "type": "keyword"
+            }
+          },
           "copy_to": [
             "_all"
           ],
@@ -36,6 +56,11 @@
         },
         "frameworks": {
           "type": "keyword",
+          "fields": {
+            "raw": {
+              "type": "keyword"
+            }
+          },
           "copy_to": [
             "_all"
           ],
@@ -43,6 +68,11 @@
         },
         "languages": {
           "type": "keyword",
+          "fields": {
+            "raw": {
+              "type": "keyword"
+            }
+          },
           "copy_to": [
             "_all"
           ],
@@ -57,6 +87,11 @@
         },
         "os": {
           "type": "keyword",
+          "fields": {
+            "raw": {
+              "type": "keyword"
+            }
+          },
           "copy_to": [
             "_all"
           ],
@@ -64,13 +99,20 @@
         },
         "pet_peeves": {
           "type": "keyword",
-          "copy_to": [
-            "_all"
-          ],
+          "fields": {
+            "raw": {
+              "type": "keyword"
+            }
+          },
           "normalizer": "lowercaser"
         },
         "platforms": {
           "type": "keyword",
+          "fields": {
+            "raw": {
+              "type": "keyword"
+            }
+          },
           "copy_to": [
             "_all"
           ],
@@ -78,13 +120,20 @@
         },
         "wanna_learns": {
           "type": "keyword",
-          "copy_to": [
-            "_all"
-          ],
+          "fields": {
+            "raw": {
+              "type": "keyword"
+            }
+          },
           "normalizer": "lowercaser"
         },
         "web": {
           "type": "keyword",
+          "fields": {
+            "raw": {
+              "type": "keyword"
+            }
+          },
           "copy_to": [
             "_all"
           ],
