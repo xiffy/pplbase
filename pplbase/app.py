@@ -1,7 +1,9 @@
 import os
+import re
 from flask import Flask, render_template, request, escape, abort, redirect, url_for, send_from_directory
 from .person import Person
 from .person_finder import PersonFinder
+from .utils import decompose_querystring
 
 
 def home():
@@ -9,11 +11,7 @@ def home():
     q = escape(request.args['q']) if request.args.get('q', None) else ''
     resultset = PersonFinder(q)
     response = resultset.execute()
-    qlist = []
-    for term in response.facets:
-        for item, _, _ in response.facets[term]:
-            if item.lower() in q.lower():
-                qlist.append(item.lower())
+    qlist = decompose_querystring(response=response, querystring=q)
     return render_template('home.html', response=response, q=q, qlist=list(set(qlist)))
 
 

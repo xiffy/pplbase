@@ -1,7 +1,9 @@
 import unittest
+from attrdict import AttrDict
 from pplbase.app import create_pplbase
 from pplbase.person import Person
 from pplbase.person_finder import PersonFinder
+from pplbase.utils import decompose_querystring
 
 
 class TestPerson(unittest.TestCase):
@@ -91,6 +93,53 @@ class TestRoutes(unittest.TestCase):
         response = self.app.get('/favicon.ico')
         self.assertEqual(response.headers.get('Content-type', None), 'image/vnd.microsoft.icon')
         response.close()
+
+class TestUtils(unittest.TestCase):
+    response = AttrDict({'facets': {'languages': [('Java', 3, False),
+                                                  ('XML', 2, False),
+                                                  ('YAML', 2, False),
+                                                  ('Assembly', 1, False),
+                                                  ('C++', 1, False),
+                                                  ('Go', 1, False),
+                                                  ('Groovy', 1, False),
+                                                  ('HTML', 1, False),
+                                                  ('Javascript', 1, False),
+                                                  ('Kotlin', 1, False)],
+                                    'web': [('Hibernate', 3, False),
+                                            ('Java EE', 2, False),
+                                            ('Java SE', 2, False),
+                                            ('jQuery', 2, False),
+                                            ('Angular', 1, False),
+                                            ('Dropwizard', 1, False)],
+                                    'editor': [('Eclipse', 2, False),
+                                               ('IntelliJ', 2, False),
+                                               ('Sublime', 2, False),
+                                               ('NetBeans', 1, False)],
+                                    'os': [('Windows', 2, False),
+                                           ('Android', 1, False),
+                                           ('Linux', 1, False),
+                                           ('MacOS', 1, False)],
+                                    'databases': [('MongoDB', 3, False),
+                                                  ('Oracle', 3, False),
+                                                  ('Postgres', 3, False),
+                                                  ('Redis', 2, False),
+                                                  ('MariaDB', 1, False),
+                                                  ('MySQL', 1, False),
+                                                  ('SQLite', 1, False)]
+                                    }
+                         })
+
+    def test_decompose_empty_querystring(self):
+        q = ''
+        self.assertListEqual(decompose_querystring(response=self.response, querystring=q), [])
+
+    def test_decompose_single_kw_querystring(self):
+        q = 'JAVA'
+        self.assertListEqual(decompose_querystring(response=self.response, querystring=q), ['java'])
+
+    def test_decompose_some_kw_querystring(self):
+        q ="ORACLE mysql scalar clojure"
+        self.assertListEqual(decompose_querystring(response=self.response, querystring=q), ['oracle', 'mysql'])
 
 
 if __name__ == "__main__":
