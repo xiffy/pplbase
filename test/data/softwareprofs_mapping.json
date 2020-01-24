@@ -1,1 +1,96 @@
-{"softwareprofs":{"mappings":{"properties":{"_all":{"type":"text","analyzer":"snowball"},"buildtools":{"type":"keyword","copy_to":["_all"],"normalizer":"lowercaser"},"containers":{"type":"keyword","copy_to":["_all"],"normalizer":"lowercaser"},"databases":{"type":"keyword","copy_to":["_all"],"normalizer":"lowercaser"},"editor":{"type":"keyword","copy_to":["_all"],"normalizer":"lowercaser"},"frameworks":{"type":"keyword","copy_to":["_all"],"normalizer":"lowercaser"},"languages":{"type":"keyword","copy_to":["_all"],"normalizer":"lowercaser"},"name":{"type":"text","copy_to":["_all"],"analyzer":"snowball"},"os":{"type":"keyword","copy_to":["_all"],"normalizer":"lowercaser"},"pet_peeves":{"type":"keyword","copy_to":["_all"],"normalizer":"lowercaser"},"platforms":{"type":"keyword","copy_to":["_all"],"normalizer":"lowercaser"},"wanna_learns":{"type":"keyword","copy_to":["_all"],"normalizer":"lowercaser"},"web":{"type":"keyword","copy_to":["_all"],"normalizer":"lowercaser"}}}}}
+{
+  "softwareprofs": {
+    "mappings": {
+      "properties": {
+        "_all": {
+          "type": "text",
+          "analyzer": "snowball"
+        },
+        "buildtools": {
+          "type": "keyword",
+          "copy_to": [
+            "_all"
+          ],
+          "normalizer": "lowercaser"
+        },
+        "containers": {
+          "type": "keyword",
+          "copy_to": [
+            "_all"
+          ],
+          "normalizer": "lowercaser"
+        },
+        "databases": {
+          "type": "keyword",
+          "copy_to": [
+            "_all"
+          ],
+          "normalizer": "lowercaser"
+        },
+        "editor": {
+          "type": "keyword",
+          "copy_to": [
+            "_all"
+          ],
+          "normalizer": "lowercaser"
+        },
+        "frameworks": {
+          "type": "keyword",
+          "copy_to": [
+            "_all"
+          ],
+          "normalizer": "lowercaser"
+        },
+        "languages": {
+          "type": "keyword",
+          "copy_to": [
+            "_all"
+          ],
+          "normalizer": "lowercaser"
+        },
+        "name": {
+          "type": "text",
+          "copy_to": [
+            "_all"
+          ],
+          "analyzer": "snowball"
+        },
+        "os": {
+          "type": "keyword",
+          "copy_to": [
+            "_all"
+          ],
+          "normalizer": "lowercaser"
+        },
+        "pet_peeves": {
+          "type": "keyword",
+          "copy_to": [
+            "_all"
+          ],
+          "normalizer": "lowercaser"
+        },
+        "platforms": {
+          "type": "keyword",
+          "copy_to": [
+            "_all"
+          ],
+          "normalizer": "lowercaser"
+        },
+        "wanna_learns": {
+          "type": "keyword",
+          "copy_to": [
+            "_all"
+          ],
+          "normalizer": "lowercaser"
+        },
+        "web": {
+          "type": "keyword",
+          "copy_to": [
+            "_all"
+          ],
+          "normalizer": "lowercaser"
+        }
+      }
+    }
+  }
+}

@@ -50,13 +50,13 @@ $(document).ready(function() {
         urlParams = new URLSearchParams(window.location.search);
         q = urlParams.get('q');
         if (that.checked) {
-            if (q) { q = q + ' ' + that.value; }
-            else   { q = that.value; }
+            if (q) { q = q + ' ' + that.value.toLowerCase(); }
+            else   { q = that.value.toLowerCase(); }
         }
         else {
             ar = {{ qlist|safe }}
             ar.forEach(function(item, index, object) {
-                if (item == that.value) {
+                if (item.toLowerCase() == that.value.toLowerCase()) {
                     object.splice(index,1)}
             });
             q = ar.join(' ');
