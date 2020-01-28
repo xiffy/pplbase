@@ -4,15 +4,15 @@ class PersonFinder(FacetedSearch):
     index = 'softwareprofs'
     fields = ['_all']
     facets = {
-        'languages': TermsFacet(field='languages.raw'),
-        'web': TermsFacet(field='web.raw'),
-        'frameworks': TermsFacet(field='frameworks.raw'),
-        'databases': TermsFacet(field='databases.raw'),
-        'platforms': TermsFacet(field='platforms.raw'),
-        'buildtools': TermsFacet(field='buildtools.raw'),
-        'editor': TermsFacet(field='editor.raw'),
-        'os': TermsFacet(field='os.raw'),
-        'containers': TermsFacet(field='containers.raw')
+        'languages': TermsFacet(field='languages.raw', size=20),
+        'web': TermsFacet(field='web.raw', size=20),
+        'frameworks': TermsFacet(field='frameworks.raw', size=20),
+        'databases': TermsFacet(field='databases.raw', size=20),
+        'platforms': TermsFacet(field='platforms.raw', size=20),
+        'buildtools': TermsFacet(field='buildtools.raw', size=20),
+        'editor': TermsFacet(field='editor.raw', size=20),
+        'os': TermsFacet(field='os.raw', size=20),
+        'containers': TermsFacet(field='containers.raw', size=20)
     }
     def search(self):
         s = super().search()

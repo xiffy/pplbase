@@ -85,9 +85,9 @@ class TestRoutes(unittest.TestCase):
         assert 'gonner' in str(response.data)
 
     def test_get_view_person(self):
-        response = self.app.get('/', query_string="q=*")
+        response = self.app.get('/view/Bill Gates')
         self.assertEqual(response.status_code, 200)
-        assert 'Vind!' in str(response.data)
+        assert 'Bill Gates' in str(response.data)
 
     def test_favicon(self):
         response = self.app.get('/favicon.ico')
@@ -100,6 +100,8 @@ class TestUtils(unittest.TestCase):
                                                   ('YAML', 2, False),
                                                   ('Assembly', 1, False),
                                                   ('C++', 1, False),
+                                                  ('C', 1, False),
+                                                  ('C#', 1, False),
                                                   ('Go', 1, False),
                                                   ('Groovy', 1, False),
                                                   ('HTML', 1, False),
@@ -136,6 +138,10 @@ class TestUtils(unittest.TestCase):
     def test_decompose_single_kw_querystring(self):
         q = 'JAVA'
         self.assertListEqual(decompose_querystring(response=self.response, querystring=q), ['java'])
+
+    def test_decompose_triple_c_querystring(self):
+        q = 'c C++ c#'
+        self.assertListEqual(decompose_querystring(response=self.response, querystring=q), ['c++', 'c', 'c#'])
 
     def test_decompose_some_kw_querystring(self):
         q ="ORACLE mysql scalar clojure"
