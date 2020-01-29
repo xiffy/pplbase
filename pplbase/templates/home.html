@@ -13,7 +13,8 @@
 
         <div class="row">
             <div class="results double_col">
-                <h2>{% if q|length %}Zoekresultaten: {{ q }} {% else %}Fortezza people base{% endif %}</h2>
+                <h2>{% if q|length %}Zoekresultaten: {{ qlist.normal|join(', ') }}
+                    {% else %}Fortezza people base{% endif %}</h2>
                 {% for result in response %}
                 <p class="ppl_result">
                     <a href="/view/{{ result.name }}">{{ result.name }}</a>
@@ -28,7 +29,7 @@
                 <h6>{{ term }}</h6>
                 <ul>
                     {% for item, count, selected in response.facets[term] %}
-                        <li><label><input value="{{ item }}" type="checkbox" class="skill" {% if item|lower in qlist %}checked="checked"{% endif %}> {{ item }} ({{ count }})</label></li>
+                        <li><label><input value="{{ item }}" type="checkbox" class="skill" {% if item|lower in qlist.lower %}checked="checked"{% endif %}> {{ item }} ({{ count }})</label></li>
                     {% endfor %}
                 </ul>
                 {% endfor %}

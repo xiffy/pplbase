@@ -104,6 +104,7 @@ class TestUtils(unittest.TestCase):
                                                   ('C#', 1, False),
                                                   ('Go', 1, False),
                                                   ('Groovy', 1, False),
+                                                  ('.Net', 2, False),
                                                   ('HTML', 1, False),
                                                   ('Javascript', 1, False),
                                                   ('Kotlin', 1, False)],
@@ -133,19 +134,23 @@ class TestUtils(unittest.TestCase):
 
     def test_decompose_empty_querystring(self):
         q = ''
-        self.assertListEqual(decompose_querystring(response=self.response, querystring=q), [])
+        d = decompose_querystring(response=self.response, querystring=q)
+        self.assertListEqual(d['lower'], [])
 
     def test_decompose_single_kw_querystring(self):
         q = 'JAVA'
-        self.assertListEqual(decompose_querystring(response=self.response, querystring=q), ['java'])
+        d = decompose_querystring(response=self.response, querystring=q)
+        self.assertListEqual(d['lower'], ['java'])
 
     def test_decompose_triple_c_querystring(self):
-        q = 'c C++ c#'
-        self.assertListEqual(decompose_querystring(response=self.response, querystring=q), ['c++', 'c', 'c#'])
+        q = 'c C++ c# .net'
+        d = decompose_querystring(response=self.response, querystring=q)
+        self.assertListEqual(d['lower'], ['c++', 'c', 'c#', '.net'])
 
     def test_decompose_some_kw_querystring(self):
         q ="ORACLE mysql scalar clojure"
-        self.assertListEqual(decompose_querystring(response=self.response, querystring=q), ['oracle', 'mysql'])
+        d = decompose_querystring(response=self.response, querystring=q)
+        self.assertListEqual(d['lower'], ['oracle', 'mysql'])
 
 
 if __name__ == "__main__":

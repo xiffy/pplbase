@@ -1,5 +1,4 @@
 import os
-import re
 from flask import Flask, render_template, request, escape, abort, redirect, url_for, send_from_directory
 from .person import Person
 from .person_finder import PersonFinder
@@ -12,7 +11,9 @@ def home():
     resultset = PersonFinder(q)
     response = resultset.execute()
     qlist = decompose_querystring(response=response, querystring=q)
-    return render_template('home.html', response=response, q=q, qlist=list(set(qlist)))
+    qlist['normal'] = list(set(qlist['normal']))
+    qlist['lower'] = list(set(qlist['lower']))
+    return render_template('home.html', response=response, q=q, qlist=qlist)
 
 
 def delete_person(name):
