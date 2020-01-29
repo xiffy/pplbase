@@ -4,7 +4,7 @@
         <div class="row pageheader">
             <div class="single_col">
                 <form action="/search">
-                    <input type="text" name="q" id="q" size="40" placeholder="" />
+                    <input type="text" name="q" id="q" size="40" placeholder="" value="{{ qlist.input }}"/>
                     <input type="submit" value="Vind!" />
                 </form>
             </div>
@@ -55,7 +55,7 @@ $(document).ready(function() {
             else   { q = that.value.toLowerCase(); }
         }
         else {
-            ar = {{ qlist|safe }}
+            ar = {{ qlist.lower|safe }}
             ar.forEach(function(item, index, object) {
                 if (item.toLowerCase() == that.value.toLowerCase()) {
                     object.splice(index,1)}

@@ -10,7 +10,8 @@ def decompose_querystring(response=None, querystring=None):
     response - the elasticsearch-dsl response object
     querystring - the querystring from the URL """
     qdict = {'lower': [],
-             'normal': []}
+             'normal': [],
+             'input': querystring}
     if response and querystring:
         for term in response.facets:
             for item, _, _ in response.facets[term]:
@@ -19,5 +20,5 @@ def decompose_querystring(response=None, querystring=None):
                 if matches and matches[0]:
                     qdict['lower'].append(matches[0][1])
                     qdict['normal'].append(item)
-
+                    qdict['input'] = re.sub(pat, ' ', qdict['input'], flags=re.IGNORECASE).strip()
     return qdict

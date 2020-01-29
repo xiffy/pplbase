@@ -151,6 +151,7 @@ class TestUtils(unittest.TestCase):
         q ="ORACLE mysql scalar clojure"
         d = decompose_querystring(response=self.response, querystring=q)
         self.assertListEqual(d['lower'], ['oracle', 'mysql'])
+        self.assertEqual(d['input'], 'scalar clojure')
 
 
 if __name__ == "__main__":
