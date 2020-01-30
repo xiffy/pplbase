@@ -1,6 +1,10 @@
 from elasticsearch_dsl import FacetedSearch, TermsFacet, connections, Search
 
 class PersonFinder(FacetedSearch):
+    """Performs a faceted search on elastic,
+    defines the facets in use,
+    which field(s) to search in
+    and by overriding search perform the search """
     index = 'softwareprofs'
     fields = ['_all']
     facets = {
@@ -17,6 +21,7 @@ class PersonFinder(FacetedSearch):
     def search(self):
         s = super().search()
         if not self._query:
+
             return s.query('match_all')
         return s.query('multi_match', query=self._query, operator="AND", fields="_all")
 

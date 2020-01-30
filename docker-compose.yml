@@ -26,16 +26,23 @@ services:
     environment:
       - discovery.type=single-node
     volumes:
-      - /c/dockerdisks:/usr/share/elasticsearch/data
+      - ${PPLBASE_STORE:-/c/dockerdisks}:/usr/share/elasticsearch/data
 
 networks:
   pplbase:
     driver: bridge
 
 
+# ELASTIC_HOSTS: space separated list of possible elasicsearch hosts, he first to answer will be used
+#                the name of the host could be a docker-service-name
+#
+# PPLBASE_STORE: optional variable pointing to the 'local'-side of the storage definition.
+#                if not set the literal /c/dockerdisks will be used as a default
+#
 
 # WSL en docker aantekeningen, codepage errors los je op door:
 # - git-bash te gebruiken (mingw)
 # of:
 # - in de terminal waar het mis gaat (Dos/Powershell) "chcp 850" te gebruiken
+
 

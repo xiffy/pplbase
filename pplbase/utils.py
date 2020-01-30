@@ -8,7 +8,12 @@ def decompose_querystring(response=None, querystring=None):
 
     Keyword Arguments: 
     response - the elasticsearch-dsl response object
-    querystring - the querystring from the URL """
+    querystring - the querystring from the URL
+
+    Return value:
+    dict -lower: list (found keywords in lowercase)
+         -normal: list (found keywords in normal casing)
+         -input: remainder of he querystring as a string """
     qdict = {'lower': [],
              'normal': [],
              'input': querystring}

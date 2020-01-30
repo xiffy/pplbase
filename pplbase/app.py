@@ -41,6 +41,7 @@ def update_person(name):
 
 
 def view_person(name):
+    """View al information from one person on a page"""
     response = Person.getter(name)
     if response.success() and response.hits.total.value == 1:
         original = response.hits[0].to_dict()
@@ -50,6 +51,7 @@ def view_person(name):
 
 
 def add_person():
+    """Add a new person to the database """
     if request.method == 'POST':
         person_save()
         return redirect(url_for('view_person', name=request.form.get('name')))
@@ -57,6 +59,7 @@ def add_person():
 
 
 def person_save(doc_id=None):
+    """Save the data posed by the form, either a new (doc_id=None) or update (doc_id=<value>) """
     answers = {'name': escape(request.form.get('name', None))}
     for field in QUESTIONS:
         answers[field] = request.form.getlist(field)
