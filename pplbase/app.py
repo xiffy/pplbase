@@ -11,8 +11,7 @@ def home():
     resultset = PersonFinder(q)
     response = resultset.execute()
     qlist = decompose_querystring(response=response, querystring=q)
-    qlist['normal'] = list(set(qlist['normal']))
-    qlist['lower'] = list(set(qlist['lower']))
+
     return render_template('home.html', response=response, q=q, qlist=qlist)
 
 

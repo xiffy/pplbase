@@ -26,7 +26,7 @@
             </div>
             <div class="buckets single_col">
                 {% for term in response.facets %}
-                <h6>{{ term }}</h6>
+                <h6>{{ term }} ({{response.aggregations['_filter_%s' % term]['doc_count'] }})</h6>
                 <ul>
                     {% for item, count, selected in response.facets[term] %}
                         <li><label><input value="{{ item }}" type="checkbox" class="skill" {% if item|lower in qlist.lower %}checked="checked"{% endif %}> {{ item }} ({{ count }})</label></li>

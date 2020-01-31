@@ -26,4 +26,7 @@ def decompose_querystring(response=None, querystring=None):
                     qdict['lower'].append(matches[0][1])
                     qdict['normal'].append(item)
                     qdict['input'] = re.sub(pat, ' ', qdict['input'], flags=re.IGNORECASE).strip()
+    # make keywords unique
+    qdict['normal'] = sorted(list(set(qdict['normal'])))
+    qdict['lower'] = sorted(list(set(qdict['lower'])))
     return qdict
