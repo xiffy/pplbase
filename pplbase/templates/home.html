@@ -4,8 +4,14 @@
         <div class="row pageheader">
             <div class="single_col">
                 <form action="/search">
-                    <input type="text" name="q" id="q" size="40" placeholder="" value="{{ qlist.input }}"/>
-                    <input type="submit" value="Vind!" />
+                    <div class="suggestions" id="suggestions">
+                        <input type="text"
+                               name="q" id="q"
+                               size="40"
+                               autocomplete="off"
+                               placeholder="" value="{{ qlist.input }}"/>
+                        <input type="submit" value="Vind!" />
+                    </div>
                 </form>
             </div>
             <div class="logo"></div>
@@ -39,34 +45,12 @@
             <a href="/new" title="Voeg jezelf toe">+</a>
         </div>
 
-<script
-			  src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
-			  integrity="sha256-pasqAKBDmFT4eHoN2ndd6lN370kFiGUFyTiUHWhU7k8="
-			  crossorigin="anonymous">
-</script>
-<script>
-$(document).ready(function() {
-    $('.skill').click(function() {
-        that = this;
-        urlParams = new URLSearchParams(window.location.search);
-        q = urlParams.get('q');
-        if (that.checked) {
-            if (q) { q = q + ' ' + that.value.toLowerCase(); }
-            else   { q = that.value.toLowerCase(); }
-        }
-        else {
-            ar = {{ qlist.lower|safe }}
-            ar.forEach(function(item, index, object) {
-                if (item.toLowerCase() == that.value.toLowerCase()) {
-                    object.splice(index,1)}
-            });
-            q = ar.join(' ');
-        }
-        urlParams.set('q', q);
-        window.location.search = urlParams;
-    });
-});
-</script>
+	<script src="https://code.jquery.com/jquery-3.4.1.min.js"
+            integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+            crossorigin="anonymous"></script>
+    <script>var ar = {{ qlist.lower|safe }} ;</script>
+    <script src="/static/pplbase.js"></script>
+
 
 {% endblock %}
 

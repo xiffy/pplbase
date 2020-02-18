@@ -1,4 +1,5 @@
-from elasticsearch_dsl import Document, Text, Keyword, normalizer, Index, Search
+from elasticsearch_dsl import Document, Text, Keyword, normalizer, Index, Search, SearchAsYouType
+from elasticsearch_dsl.query import MultiMatch
 
 lowercase = normalizer('lowercaser',
                        filter=['lowercase']
@@ -6,7 +7,9 @@ lowercase = normalizer('lowercaser',
 
 
 class Person(Document):
-    name = Text(analyzer='snowball', copy_to='_all')
+    name = Text(analyzer='snowball',
+                copy_to='_all',
+                fields={'namesuggest': SearchAsYouType(max_shingle_size=3)})
     languages = Keyword(normalizer=lowercase, fields={'raw': Keyword()}, copy_to='_all')
     web = Keyword(normalizer=lowercase, copy_to='_all', fields={'raw': Keyword()})
     frameworks = Keyword(normalizer=lowercase, copy_to='_all', fields={'raw': Keyword()})
@@ -22,6 +25,7 @@ class Person(Document):
 
     class Index:
         name = 'softwareprofs'
+        settings = {'number_of_replicas': 0}
 
     @classmethod
     def getter(cls, name):
@@ -35,6 +39,14 @@ class Person(Document):
         pers = Search(index='softwareprofs').query("simple_query_string", query=' +'.join(q), fields=["name"])
         pers.delete()
         return True
+
+    @classmethod
+    def suggest(cls, txt):
+        p = cls.search()
+        p.query = MultiMatch(query=txt,
+                             type='bool_prefix',
+                             fields=['name'])
+        return p.execute()
 
 
 if not Index('softwareprofs').exists():

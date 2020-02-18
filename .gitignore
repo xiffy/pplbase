@@ -2,3 +2,6 @@
 /test/data/old_*.json
 /.idea/
 /pplbase/__pycache__/
+/node_modules/
+package-lock.json
+

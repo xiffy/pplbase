@@ -21,7 +21,6 @@ class PersonFinder(FacetedSearch):
     def search(self):
         s = super().search()
         if not self._query:
-
             return s.query('match_all')
         return s.query('multi_match', query=self._query, operator="AND", fields="_all")
 
