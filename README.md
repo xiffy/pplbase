@@ -29,6 +29,10 @@ flask run
 
 Je hebt nu een elasticsearch instantie op de standaard poort 9200 draaien (bereikbaar vanaf localhost en nergens anders), en een webserver luisterend op poort 5000. http://localhost:5000/ levert een maagdelijke PeopleBase. 
 
+ELASTIC_HOST: used inside helper-scripts and for testing where precise location of the database and port is crucial, defaults to: ```localhost:9204```
+
+ELASTIC_HOSTS: space separated list of possible host where Elasticsearch might answer. Eases the use in mixed networks (bridged, nat, docker) defaults to: ```localhost:9200``` possible other values (from docker-compose.yml where 'elastic' is the name of the container) ```elastic localhost```
+
 #### Docker
 Of je gebruikt docker en docker-compose. In de project root staat een _Dockerfile_ en een _docker-compose.yml_. De dockerfile gebruikt Docker om de flask-python applicatie te kunnen bouwen en draaien. Voor elasticsearch gebruik ik een default image (zonder te builden)
 
@@ -40,22 +44,12 @@ docker-compose build
 docker-compose up
 ```
 c'est tout. Ook nu kan je op http://localhost:5000/ de applicatie draaien (Your Milage May Vary). 
+ELASTIC_HOSTS: space separated list of possible elasicsearch hosts, he first to answer will be used the name of the host could be a docker-service-name
 
-
-##### Optional environment variables
-ELASTIC_HOST: used inside helper-scripts and for testing where precise location of the database and port is crucial, defaults to: ```localhost:9204```
-
-ELASTIC_HOSTS: space separated list of possible host where Elasticsearch might answer. Eases the use in mixed networks (bridged, nat, docker) defaults to: ```localhost:9200``` possible other values (from docker-compose.yml where 'elastic' is the name of the container) ```elastic localhost```
-
-PPLBASE_STORE: (docker only; directory waar elasticsearch zijn data moet schrijven) defaults to: ```/c/dockerdisks/pplbase```
-
+PPLBASE_STORE: optional variable pointing to the 'local'-side of the storage definition. if not set the literal /c/dockerdisks will be used as a default
 
 
     
 TODO:
- - [X] Testen schrijven
- - [x] Dockerize elastic
- - [x] Persisteer Elasticsearch data
- - [x] Dockerize pplbase
  - [ ] setup.py
 
