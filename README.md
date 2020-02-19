@@ -13,6 +13,8 @@ routes:
 /delete/<naam> 
 /new
 /search?q=<query>
+/suggest/<inp>
+/namefinder/<inp>
 ```
 
 #### Running naked (very localhost)
