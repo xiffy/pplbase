@@ -145,12 +145,12 @@ class TestUtils(unittest.TestCase):
     def test_decompose_triple_c_querystring(self):
         q = 'c C++ c# .net'
         d = decompose_querystring(response=self.response, querystring=q)
-        self.assertListEqual(d['lower'], ['c++', 'c', 'c#', '.net'])
+        self.assertListEqual(d['lower'], ['.net', 'c', 'c#', 'c++'])
 
     def test_decompose_some_kw_querystring(self):
         q ="ORACLE mysql scalar clojure"
         d = decompose_querystring(response=self.response, querystring=q)
-        self.assertListEqual(d['lower'], ['oracle', 'mysql'])
+        self.assertListEqual(d['lower'], ['mysql', 'oracle'])
         self.assertEqual(d['input'], 'scalar clojure')
 
 
