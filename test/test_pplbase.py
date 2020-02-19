@@ -19,7 +19,7 @@ class TestPerson(unittest.TestCase):
 
     def test_suggest_method(self):
         suggest = Person.suggest('Ste')
-        self.assertEqual(len(suggest), 1)
+        self.assertEqual(len(suggest), 3)
 
 class TestRoutes(unittest.TestCase):
 
