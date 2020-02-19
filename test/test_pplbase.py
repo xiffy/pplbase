@@ -17,6 +17,10 @@ class TestPerson(unittest.TestCase):
         result = Person.getter('Steve Jobs')
         self.assertEqual(len(result), 1)
 
+    def test_suggest_method(self):
+        suggest = Person.suggest('Ste')
+        self.assertEqual(len(suggest), 1)
+
 class TestRoutes(unittest.TestCase):
 
     def setUp(self):
@@ -93,6 +97,14 @@ class TestRoutes(unittest.TestCase):
         response = self.app.get('/favicon.ico')
         self.assertEqual(response.headers.get('Content-type', None), 'image/vnd.microsoft.icon')
         response.close()
+
+    def test_suggest_is_json(self):
+        response = self.app.get('/suggest/Ste')
+        self.assertEqual(response.headers.get('Content-type', None), 'application/json')
+
+    def test_suggest_finds_steves(self):
+        response = self.app.get('/suggest/Ste')
+        self.assertEqual(len(response.get_json()), 3)
 
 class TestUtils(unittest.TestCase):
     response = AttrDict({'facets': {'languages': [('Java', 3, False),
