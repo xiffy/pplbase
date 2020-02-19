@@ -12,4 +12,5 @@ COPY pplbase/*.py /app/
 COPY pplbase/static /app/static/
 COPY pplbase/templates /app/templates/
 
+#CMD ["bash"]
 CMD ["flask", "run", "--host=0.0.0.0"]
