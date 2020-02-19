@@ -55,7 +55,7 @@ $(document).ready(function() {
 
     function showSuggestions(data){
         if (!data) {return false;}
-        removeSuggestions()
+        removeSuggestions();
         a = document.createElement("div");
         a.setAttribute('id', 'q-autocomplete');
         document.getElementById('suggestions').appendChild(a);
