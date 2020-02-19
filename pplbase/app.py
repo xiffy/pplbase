@@ -89,6 +89,13 @@ def suggest(txt):
         s = [hit.name for hit in suggestions.hits]
     return jsonify(s)
 
+def namefinder(txt):
+    names = Person.name_unique(txt)
+    s = []
+    if names.hits.total.value:
+        s = [hit.name for hit in names.hits]
+    return jsonify(s)
+
 
 def favicon():
     return send_from_directory(os.path.join(app.root_path, 'static'),
@@ -105,6 +112,7 @@ def create_pplbase():
     app.add_url_rule('/', view_func=home)
     app.add_url_rule('/search', view_func=home)
     app.add_url_rule('/suggest/<txt>', view_func=suggest)
+    app.add_url_rule('/namefinder/<txt>', view_func=namefinder)
     return app
 
 

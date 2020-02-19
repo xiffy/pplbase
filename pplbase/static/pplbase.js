@@ -29,10 +29,29 @@ $(document).ready(function() {
         }
     });
 
-    $('.row .buckets').click(function() {
+    $('.row, .buckets').click(function() {
         removeSuggestions();
-        console.log('clickerdieclick')
     });
+
+    $('.formwrap #name').keyup(function() {
+       if (this.value) {
+           jQuery.ajax({
+               url: '/namefinder/' + this.value,
+               success: showNameOkay
+           })
+       }
+    });
+
+    function showNameOkay(data, typed) {
+        if (data.length && data.length == 1
+            && $('.formwrap #name').val().toLowerCase().trim() == data[0].toLowerCase()) {
+            $('#updatalizer').prop('disabled', true);
+            $('.formwrap #name').addClass('wrong-value')
+        } else {
+            $('#updatalizer').prop('disabled', false);
+            $('.formwrap #name').removeClass('wrong-value')
+        }
+    }
 
     function showSuggestions(data){
         if (!data) {return false;}

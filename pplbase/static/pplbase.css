@@ -117,6 +117,11 @@ body {
   background-color: #e9e9e9;
 }
 
+.wrong-value {
+    background-color: indianred;
+    color: white;
+}
+
 .sidebar {
     background: transparent;
     padding: 10px;

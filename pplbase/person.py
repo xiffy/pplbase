@@ -1,5 +1,5 @@
 from elasticsearch_dsl import Document, Text, Keyword, normalizer, Index, Search
-from elasticsearch_dsl.query import MultiMatch
+from elasticsearch_dsl.query import MultiMatch, MatchPhrase
 
 lowercase = normalizer('lowercaser',
                        filter=['lowercase']
@@ -45,6 +45,12 @@ class Person(Document):
         p.query = MultiMatch(query=txt,
                              type='bool_prefix',
                              fields=['name'])
+        return p.execute()
+
+    @classmethod
+    def name_unique(cls, txt):
+        p = cls.search()
+        p.query = MatchPhrase(name=txt)
         return p.execute()
 
 

@@ -6,7 +6,10 @@
             <h2>Software professional -{{ mode }}-</h2>
             <form method="POST">
                 <label class="toplabel">Naam: <sup>*</sup></label><br/>
-                <input type="text" placeholder="e.g. Jeffrey Lebowski" size="40" required="required" name="name" value="{{ values.name|default('') }}"/>
+                <input type="text" placeholder="e.g. Jeffrey Lebowski"
+                       size="40" required="required"
+                       autocomplete="off"
+                       id="name" name="name" value="{{ values.name|default('') }}"/>
                 <br/>
                 {% for topic in answers %}
                     <label class="toplabel">{{ questions[topic].get('q', 'Question not on file') }}</label><br />
@@ -29,7 +32,7 @@
                 <textarea rows="4" cols="80" name="pet_peeves">{{ values.pet_peeves|join(', ') }}</textarea>
                 <br/>
             {% if mode == 'new' %}
-                <input type="submit" value="Voeg toe" class="bigbutton"/>
+                <input type="submit" value="Voeg toe" class="bigbutton" id="updatalizer"/>
             {% else %}
                 <input type="submit" value="Sla op" class="bigbutton"/>
             {% endif %}
@@ -40,4 +43,9 @@
         </div>
 
     </div>
+
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"
+            integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+            crossorigin="anonymous"></script>
+    <script src="/static/pplbase.js"></script>
 {% endblock %}
