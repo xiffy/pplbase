@@ -9,7 +9,7 @@ lowercase = normalizer('lowercaser',
 class Person(Document):
     name = Text(analyzer='snowball',
                 copy_to='_all',
-                fields={'namesuggest': SearchAsYouType(max_shingle_size=3)})
+                fields={'suggest': SearchAsYouType(max_shingle_size=3)})
     languages = Keyword(normalizer=lowercase, fields={'raw': Keyword()}, copy_to='_all')
     web = Keyword(normalizer=lowercase, copy_to='_all', fields={'raw': Keyword()})
     frameworks = Keyword(normalizer=lowercase, copy_to='_all', fields={'raw': Keyword()})
@@ -45,7 +45,7 @@ class Person(Document):
         p = cls.search()
         p.query = MultiMatch(query=txt,
                              type='bool_prefix',
-                             fields=['name'])
+                             fields=['name', 'name__suggest', 'name__suggest._2gram'])
         return p.execute()
 
 

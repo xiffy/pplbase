@@ -80,6 +80,12 @@
         },
         "name": {
           "type": "text",
+          "fields": {
+            "suggest": {
+              "type": "search_as_you_type",
+              "max_shingle_size": 3
+            }
+          },
           "copy_to": [
             "_all"
           ],

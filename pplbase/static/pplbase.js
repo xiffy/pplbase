@@ -40,6 +40,7 @@ $(document).ready(function() {
             i.innerHTML = item;
             i.addEventListener('click',function(){
                 $('#q').val(this.innerText);
+                console.log('hebbes?');
                 removeSuggestions()
             });
             a.appendChild(i);
