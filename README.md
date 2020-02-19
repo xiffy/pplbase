@@ -34,6 +34,8 @@ Of je gebruikt docker en docker-compose. In de project root staat een _Dockerfil
 
 ```
 git clone git@github.com:xiffy/pplbase.git 
+mkdir -p ~/dockerdisks/pplbase
+export PPLBASE_STORE=~/dockerdisks/pplbase
 docker-compose build
 docker-compose up
 ```
@@ -44,6 +46,8 @@ c'est tout. Ook nu kan je op http://localhost:5000/ de applicatie draaien (Your 
 ELASTIC_HOST: used inside helper-scripts and for testing where precise location of the database and port is crucial, defaults to: ```localhost:9204```
 
 ELASTIC_HOSTS: space separated list of possible host where Elasticsearch might answer. Eases the use in mixed networks (bridged, nat, docker) defaults to: ```localhost:9200``` possible other values (from docker-compose.yml where 'elastic' is the name of the container) ```elastic localhost```
+
+PPLBASE_STORE: (docker only; directory waar elasticsearch zijn data moet schrijven) defaults to: ```/c/dockerdisks/pplbase```
 
 
 
