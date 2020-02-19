@@ -124,7 +124,7 @@ body {
 
 .sidebar {
     background: transparent;
-    padding: 10px;
+    padding: 10px 10px 0 40px;
     margin-right: 10px;
 }
 .buckets ul {
