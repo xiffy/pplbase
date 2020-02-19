@@ -1,4 +1,4 @@
-from elasticsearch_dsl import Document, Text, Keyword, normalizer, Index, Search, SearchAsYouType
+from elasticsearch_dsl import Document, Text, Keyword, normalizer, Index, Search
 from elasticsearch_dsl.query import MultiMatch
 
 lowercase = normalizer('lowercaser',
@@ -8,8 +8,7 @@ lowercase = normalizer('lowercaser',
 
 class Person(Document):
     name = Text(analyzer='snowball',
-                copy_to='_all',
-                fields={'suggest': SearchAsYouType(max_shingle_size=3)})
+                copy_to='_all')
     languages = Keyword(normalizer=lowercase, fields={'raw': Keyword()}, copy_to='_all')
     web = Keyword(normalizer=lowercase, copy_to='_all', fields={'raw': Keyword()})
     frameworks = Keyword(normalizer=lowercase, copy_to='_all', fields={'raw': Keyword()})
@@ -45,7 +44,7 @@ class Person(Document):
         p = cls.search()
         p.query = MultiMatch(query=txt,
                              type='bool_prefix',
-                             fields=['name', 'name__suggest', 'name__suggest._2gram'])
+                             fields=['name'])
         return p.execute()
 
 
