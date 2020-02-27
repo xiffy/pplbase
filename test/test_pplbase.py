@@ -106,6 +106,10 @@ class TestRoutes(unittest.TestCase):
         response = self.app.get('/suggest/Ste')
         self.assertEqual(len(response.get_json()), 3)
 
+    def test_api_dump(self):
+        response = self.app.get('/api/dump')
+        self.assertEqual(len(response.get_json()), 9)
+
 class TestUtils(unittest.TestCase):
     response = AttrDict({'facets': {'languages': [('Java', 3, False),
                                                   ('XML', 2, False),
