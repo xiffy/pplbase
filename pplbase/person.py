@@ -1,5 +1,7 @@
 from elasticsearch_dsl import Document, Text, Keyword, normalizer, Index, Search
-from elasticsearch_dsl.query import MultiMatch, MatchPhrase
+from elasticsearch_dsl.query import MultiMatch, MatchPhrase, MatchAll
+from elasticsearch_dsl.utils import AttrList
+
 
 lowercase = normalizer('lowercaser',
                        filter=['lowercase']
@@ -52,6 +54,23 @@ class Person(Document):
         p = cls.search()
         p.query = MatchPhrase(name=txt)
         return p.execute()
+
+    @classmethod
+    def all(cls):
+        p = cls.search()
+        p.query = MatchAll()
+        return p.execute()
+
+    def dictit(self):
+        pers = {'name': self.name}
+        for fld in self:
+            if isinstance(self[fld], AttrList):
+                pers[fld] = list(self[fld])
+            else:
+                pers[fld] = self[fld]
+        return pers
+
+
 
 
 if not Index('softwareprofs').exists():

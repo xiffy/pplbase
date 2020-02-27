@@ -1,4 +1,5 @@
 import os
+from elasticsearch_dsl.utils import AttrList
 from flask import Flask, render_template, request, escape, abort, redirect, url_for, send_from_directory, jsonify
 from .person import Person
 from .person_finder import PersonFinder
@@ -96,6 +97,12 @@ def namefinder(txt):
         s = [hit.name for hit in names.hits]
     return jsonify(s)
 
+def api_all():
+    hits = Person().all().hits
+    all = []
+    for hit in hits:
+        all.append(hit.dictit())
+    return (jsonify(all))
 
 def favicon():
     return send_from_directory(os.path.join(app.root_path, 'static'),
@@ -113,6 +120,7 @@ def create_pplbase():
     app.add_url_rule('/search', view_func=home)
     app.add_url_rule('/suggest/<txt>', view_func=suggest)
     app.add_url_rule('/namefinder/<txt>', view_func=namefinder)
+    app.add_url_rule('/api/dump', view_func=api_all)
     return app
 
 
