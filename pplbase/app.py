@@ -172,9 +172,8 @@ QUESTIONS = {
 }
 
 ANSWERS = {
-    'languages': ['Java', 'Kotlin', 'Python', 'PHP', '.NET', "C", "C++", "C#", "Objective C", "Ruby", "Scala",
-                  "Javascript", "Typescript", "XML", "HTML", "YAML", "Groovy", "Erlang", "GraphQL", "WebAssembly",
-                  'Assembly', 'VBA'],
+    'languages': ['Java', 'Kotlin', 'Python', 'PHP', '.NET', "C", "C++", "C#", "Objective C", "Ruby", "Go", "Scala",
+                  "Javascript", "Typescript", "XML", "HTML", "YAML", "Groovy", "Erlang", "GraphQL", "WebAssembly",],
     'databases': ['MySQL', 'MariaDB', 'Postgres', 'SQL Server', 'SQLite', 'Oracle', 'MongoDB', 'Redis',
                   'Elasticsearch', 'SOLR', 'Cassandra', 'Neo4J', 'Firebase'],
     'web': ['jQuery', 'React', 'Angular', 'Angular.js', 'Vue.js', 'ASP.NET', 'Express', 'Spring', 'Spring Boot',

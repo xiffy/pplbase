@@ -123,6 +123,14 @@ class TestRoutes(unittest.TestCase):
         response = self.app.get('/api/keywords/os')
         self.assertIn('Linux', response.get_json())
 
+    def test_api_keyword_from_list(self):
+        response = self.app.get('/api/keywords/languages')
+        self.assertIn('Algol', response.get_json())
+
+    def test_new_has_algol(self):
+        response = self.app.get('/new')
+        self.assertIn('Algol', str(response.data))
+
 
 class TestUtils(unittest.TestCase):
     response = AttrDict({'facets': {'languages': [('Java', 3, False),
