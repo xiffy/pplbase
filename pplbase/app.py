@@ -20,7 +20,7 @@ def delete_person(name):
     """"Remove one person by name from the database"""
     response = Person.getter(name)
     if response.success() and response.hits.total.value >= 1:
-        Person.delete(name)
+        Person.remove(name)
     else:
         # fail hard
         abort(404)
@@ -83,12 +83,14 @@ def person_save(doc_id=None):
         person = Person.get(doc_id)
         person.update(refresh=True, **answers)
 
+
 def suggest(txt):
     suggestions = Person.suggest(txt)
     s = []
     if suggestions.hits.total.value:
         s = [hit.name for hit in suggestions.hits]
     return jsonify(s)
+
 
 def namefinder(txt):
     names = Person.name_unique(txt)
@@ -97,12 +99,20 @@ def namefinder(txt):
         s = [hit.name for hit in names.hits]
     return jsonify(s)
 
+
 def api_all():
     hits = Person().all().hits
     all = []
     for hit in hits:
         all.append(hit.dictit())
     return (jsonify(all))
+
+def api_keywords(keywordname):
+    if not keywordname in QUESTIONS:
+        abort(404)
+    keywords = Person().get_keywords(keywordname)
+    return jsonify(keywords)
+
 
 def favicon():
     return send_from_directory(os.path.join(app.root_path, 'static'),
@@ -121,6 +131,7 @@ def create_pplbase():
     app.add_url_rule('/suggest/<txt>', view_func=suggest)
     app.add_url_rule('/namefinder/<txt>', view_func=namefinder)
     app.add_url_rule('/api/dump', view_func=api_all)
+    app.add_url_rule('/api/keywords/<keywordname>', view_func=api_keywords)
     return app
 
 
@@ -132,19 +143,19 @@ QUESTIONS = {
                   'title': 'Programmeert, script en markupt in:'},
     'databases': {'q': 'Wat voor Database(s) gebruik je veelal?',
                   'extra': True,
-                  'title': 'Bewaard in:'},
+                  'title': 'Bewaart in:'},
     'web': {'q': 'Welke web frameworks gebruik je veelal?',
             'extra': True,
-            'title': 'Op poort 80 antwoord:'},
+            'title': 'Op poort 80 antwoordt:'},
     'frameworks': {'q': 'Welke andere frameworks, libraries en/of tools gebruik je veelal?',
                    'extra': True,
                    'title': 'Gebruikt ook'},
     'platforms': {'q': 'Wat voor platform(s) ontwikkel je veelal tegen?',
                   'extra': True,
                   'title': 'Ontwikkelt voor:'},
-    'buildtools': {'q': 'Wat voor build tools gebruik je veelal?',
+    'buildtools': {'q': 'Wat voor buildtools gebruik je veelal?',
                    'extra': True,
-                   'title': 'Build met:'},
+                   'title': 'Buildt met:'},
     'editor': {'q': 'Wat voor applicatie gebruik je veelal voor software ontwikkeling?',
                'extra': True,
                'title': 'Typt in:'},
@@ -159,7 +170,7 @@ QUESTIONS = {
 ANSWERS = {
     'languages': ['Java', 'Kotlin', 'Python', 'PHP', '.NET', "C", "C++", "C#", "Objective C", "Ruby", "Go", "Scala",
                   "Javascript", "Typescript", "XML", "HTML", "YAML", "Groovy", "Erlang", "GraphQL", "WebAssembly",
-                  'Assembly'],
+                  'Assembly', 'VBA'],
     'databases': ['MySQL', 'MariaDB', 'Postgres', 'SQL Server', 'SQLite', 'Oracle', 'MongoDB', 'Redis',
                   'Elasticsearch', 'SOLR', 'Cassandra', 'Neo4J', 'Firebase'],
     'web': ['jQuery', 'React', 'Angular', 'Angular.js', 'Vue.js', 'ASP.NET', 'Express', 'Spring', 'Spring Boot',

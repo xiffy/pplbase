@@ -35,11 +35,10 @@ class Person(Document):
         return pers.execute()
 
     @classmethod
-    def delete(cls, name):
+    def remove(cls, name):
         q = [w for w in name.split(' ')]
         pers = Search(index='softwareprofs').query("simple_query_string", query=' +'.join(q), fields=["name"])
         pers.delete()
-        return True
 
     @classmethod
     def suggest(cls, txt):
@@ -70,7 +69,13 @@ class Person(Document):
                 pers[fld] = self[fld]
         return pers
 
-
+    @classmethod
+    def get_keywords(cls, keyword):
+        q_dict = {'size': 0, 'aggs': {'question': {'terms': {'field': keyword, 'size': 250}}}}
+        searcher = Search.from_dict(q_dict)
+        answers = searcher.execute()
+        retval = [keyword['key'] for keyword in answers.aggregations.question]
+        return retval
 
 
 if not Index('softwareprofs').exists():
