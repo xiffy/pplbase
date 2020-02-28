@@ -71,7 +71,7 @@ class Person(Document):
 
     @classmethod
     def get_keywords(cls, keyword):
-        q_dict = {'size': 0, 'aggs': {'question': {'terms': {'field': keyword, 'size': 250}}}}
+        q_dict = {'size': 0, 'aggs': {'question': {'terms': {'field': '%s.raw' % keyword, 'size': 250}}}}
         searcher = Search.from_dict(q_dict)
         answers = searcher.execute()
         retval = [keyword['key'] for keyword in answers.aggregations.question]

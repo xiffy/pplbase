@@ -21,6 +21,15 @@ class TestPerson(unittest.TestCase):
         suggest = Person.suggest('Ste')
         self.assertEqual(len(suggest), 3)
 
+    def test_keywordlist(self):
+        given_answers = Person.get_keywords('languages')
+        self.assertEqual(len(given_answers), 19)
+
+    def test_keywordlist_empty(self):
+        given_answers = Person.get_keywords('anguag')
+        self.assertEqual(len(given_answers), 0)
+
+
 class TestRoutes(unittest.TestCase):
 
     def setUp(self):
@@ -110,6 +119,11 @@ class TestRoutes(unittest.TestCase):
         response = self.app.get('/api/dump')
         self.assertEqual(len(response.get_json()), 9)
 
+    def test_api_keyword(self):
+        response = self.app.get('/api/keywords/os')
+        self.assertIn('Linux', response.get_json())
+
+
 class TestUtils(unittest.TestCase):
     response = AttrDict({'facets': {'languages': [('Java', 3, False),
                                                   ('XML', 2, False),
@@ -164,7 +178,7 @@ class TestUtils(unittest.TestCase):
         self.assertListEqual(d['lower'], ['.net', 'c', 'c#', 'c++'])
 
     def test_decompose_some_kw_querystring(self):
-        q ="ORACLE mysql scalar clojure"
+        q = "ORACLE mysql scalar clojure"
         d = decompose_querystring(response=self.response, querystring=q)
         self.assertListEqual(d['lower'], ['mysql', 'oracle'])
         self.assertEqual(d['input'], 'scalar clojure')

@@ -55,6 +55,10 @@ def add_person():
     if request.method == 'POST':
         person_save()
         return redirect(url_for('view_person', name=request.form.get('name')))
+    # extend the possible answers with answers from the 'other' input
+    for topic in ANSWERS:
+        given_answers = Person().get_keywords(topic)
+        ANSWERS[topic].extend(extra for extra in given_answers if extra not in ANSWERS[topic])
     return render_template('person-form.html', mode='new', values={}, answers=ANSWERS, questions=QUESTIONS)
 
 
@@ -168,7 +172,7 @@ QUESTIONS = {
 }
 
 ANSWERS = {
-    'languages': ['Java', 'Kotlin', 'Python', 'PHP', '.NET', "C", "C++", "C#", "Objective C", "Ruby", "Go", "Scala",
+    'languages': ['Java', 'Kotlin', 'Python', 'PHP', '.NET', "C", "C++", "C#", "Objective C", "Ruby", "Scala",
                   "Javascript", "Typescript", "XML", "HTML", "YAML", "Groovy", "Erlang", "GraphQL", "WebAssembly",
                   'Assembly', 'VBA'],
     'databases': ['MySQL', 'MariaDB', 'Postgres', 'SQL Server', 'SQLite', 'Oracle', 'MongoDB', 'Redis',
