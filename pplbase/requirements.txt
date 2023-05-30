@@ -12,7 +12,7 @@ itsdangerous==1.1.0
 Jinja2==2.11.3
 jsons==1.1.1
 MarkupSafe==1.1.1
-requests==2.22.0
+requests==2.31.0
 six==1.12.0
 urllib3==1.26.5
 Werkzeug==2.2.3
